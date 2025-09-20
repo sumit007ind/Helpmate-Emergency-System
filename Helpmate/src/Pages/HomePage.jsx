@@ -18,7 +18,9 @@ export default function Home() {
         </Link>
         <Link
           to="/signup"
-         
+          className="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-xl text-lg font-semibold"
+        >
+          Signup
         </Link>
       </div>
     </div>
