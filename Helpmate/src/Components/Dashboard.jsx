@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FaBell, FaUserFriends, FaSignOutAlt, FaExclamationTriangle } from "react-icons/fa";
 
 const Dashboard = () => {
-  // ✅ Dummy User Data (replace with API later)
+
   const user = {
     name: "sumit sharma",
     email: "sumit123@gmail.com",
@@ -17,7 +17,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-6">
-      {/* HEADER */}
+      
       <header className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold">🚨 Helpmate Dashboard</h1>
         <button className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 rounded-xl transition">
@@ -25,13 +25,13 @@ const Dashboard = () => {
         </button>
       </header>
 
-      {/* USER INFO */}
+
       <section className="bg-white/10 backdrop-blur-md p-6 rounded-2xl shadow-lg mb-8">
         <h2 className="text-2xl font-semibold mb-2">Welcome, {user.name} 👋</h2>
         <p className="text-gray-300">Email: {user.email}</p>
       </section>
 
-      {/* STATS CARDS */}
+      
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl shadow hover:scale-105 transition">
           <FaBell className="text-3xl text-yellow-400 mb-3" />
@@ -50,7 +50,7 @@ const Dashboard = () => {
         </div>
       </section>
 
-      {/* QUICK ACTIONS */}
+     
       <section className="flex flex-col md:flex-row gap-6 mb-10">
         <Link
           to="/alert"
@@ -66,7 +66,7 @@ const Dashboard = () => {
         </Link>
       </section>
 
-      {/* RECENT ALERTS TABLE */}
+=
       <section className="bg-white/10 backdrop-blur-md p-6 rounded-2xl shadow-lg overflow-x-auto">
         <h3 className="text-xl font-bold mb-4">Recent Alerts</h3>
         <table className="w-full text-left border-collapse">
