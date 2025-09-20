@@ -8,7 +8,6 @@ const SOSButton = () => {
   const countdownInterval = useRef(null);
   const pressTimer = useRef(null);
 
-  // Get user's current location
   const getCurrentLocation = () => {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {
@@ -27,7 +26,7 @@ const SOSButton = () => {
     });
   };
 
-  // Start countdown when button is pressed
+  
   const handleMouseDown = async () => {
     setIsPressed(true);
     setCountdown(3);
@@ -40,7 +39,7 @@ const SOSButton = () => {
       setLocation(null);
     }
     
-    // Start 3-second countdown
+    
     let timeLeft = 3;
     countdownInterval.current = setInterval(() => {
       timeLeft -= 1;
@@ -52,7 +51,7 @@ const SOSButton = () => {
     }, 1000);
   };
 
-  // Cancel countdown if button is released
+  
   const handleMouseUp = () => {
     if (countdownInterval.current) {
       clearInterval(countdownInterval.current);
@@ -62,7 +61,7 @@ const SOSButton = () => {
     setCountdown(0);
   };
 
-  // Trigger emergency alert
+ 
   const triggerEmergency = async () => {
     setIsEmergencyActive(true);
     clearInterval(countdownInterval.current);
@@ -72,12 +71,12 @@ const SOSButton = () => {
     const emergencyData = {
       timestamp: new Date().toISOString(),
       location: location,
-      userId: localStorage.getItem('userId'), // Assuming user ID is stored
+      userId: localStorage.getItem('userId'), 
       type: 'SOS_BUTTON_PRESS'
     };
 
     try {
-      // Send emergency alert to backend
+      
       const response = await fetch('/api/alerts/emergency', {
         method: 'POST',
         headers: {
@@ -89,7 +88,7 @@ const SOSButton = () => {
 
       if (response.ok) {
         console.log('Emergency alert sent successfully');
-        // Show success message
+        
         alert('🚨 Emergency alert sent to your contacts!');
       } else {
         throw new Error('Failed to send emergency alert');
@@ -99,13 +98,13 @@ const SOSButton = () => {
       alert('❌ Failed to send emergency alert. Please try again.');
     }
 
-    // Reset after 5 seconds
+    
     setTimeout(() => {
       setIsEmergencyActive(false);
     }, 5000);
   };
 
-  // Cancel active emergency
+ 
   const cancelEmergency = async () => {
     try {
       await fetch('/api/alerts/cancel', {
@@ -131,7 +130,7 @@ const SOSButton = () => {
         <p className="text-gray-600 text-lg">Hold the button for 3 seconds to send emergency alert</p>
       </div>
 
-      {/* Main SOS Button */}
+      
       <div 
         className={`w-48 h-48 rounded-full mx-auto my-6 cursor-pointer flex flex-col items-center justify-center transition-all duration-300 select-none relative border-4 border-white shadow-2xl
           ${isPressed 
@@ -164,14 +163,14 @@ const SOSButton = () => {
         )}
       </div>
 
-      {/* Location Info */}
+      
       {location && (
         <div className="my-6 p-4 bg-gray-100 rounded-lg text-gray-700">
           <p>📍 Location: {location.latitude.toFixed(6)}, {location.longitude.toFixed(6)}</p>
         </div>
       )}
 
-      {/* Cancel Button */}
+      
       {isEmergencyActive && (
         <button 
           className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg my-6"
@@ -181,7 +180,7 @@ const SOSButton = () => {
         </button>
       )}
 
-      {/* Instructions */}
+    
       <div className="mt-8 text-left bg-gray-50 p-6 rounded-xl border-l-4 border-red-600">
         <h3 className="text-red-600 text-xl font-bold mb-4">How it works:</h3>
         <ul className="space-y-3">
