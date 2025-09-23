@@ -5,9 +5,9 @@ import Signup from "./Components/Signup";
 import Dashboard from "./Components/Dashboard";
 import Profile from "./Components/Profile";
 import SOSButton from "./Components/SOSButton";
-import AlertPage from "./pages/AlertPage";
-import ContactsPage from "./pages/ContactsPage";
-import NotFoundPage from "./pages/NotFoundPage";
+import AlertPage from "./Pages/AlertPage";
+import ContactsPage from "./Pages/ContactsPage";
+import NotFoundPage from "./Pages/NotFoundPage";
 
 // Optional: Protected Route component for authenticated pages
 const ProtectedRoute = ({ children }) => {
@@ -21,7 +21,7 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-         
+          {/* Public Routes */}
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
