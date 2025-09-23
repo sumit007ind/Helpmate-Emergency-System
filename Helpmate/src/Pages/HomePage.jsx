@@ -1,28 +1,461 @@
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-export default function Home() {
+const HomePage = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const navigate = useNavigate();
+
+  // Slider data
+  const slides = [
+    {
+      id: 1,
+      title: "Instant Emergency Response",
+      description: "Press and hold the SOS button for 3 seconds to instantly alert your emergency contacts with your location.",
+      image: "🚨",
+      bgColor: "bg-gradient-to-r from-red-500 to-red-600"
+    },
+    {
+      id: 2,
+      title: "Health Monitoring",
+      description: "AI-powered health monitoring that detects anomalies and automatically triggers emergency alerts when needed.",
+      image: "🏥",
+      bgColor: "bg-gradient-to-r from-blue-500 to-blue-600"
+    },
+    {
+      id: 3,
+      title: "Smart Contact Management",
+      description: "Organize emergency contacts by priority levels. Family gets alerted first, followed by friends and medical professionals.",
+      image: "📞",
+      bgColor: "bg-gradient-to-r from-green-500 to-green-600"
+    },
+    {
+      id: 4,
+      title: "Real-time Location Sharing",
+      description: "Automatically share your precise location with emergency contacts and services for faster response times.",
+      image: "📍",
+      bgColor: "bg-gradient-to-r from-purple-500 to-purple-600"
+    },
+    {
+      id: 5,
+      title: "Professional Monitoring",
+      description: "24/7 professional monitoring service ensures someone is always watching out for your safety and wellbeing.",
+      image: "👨‍⚕️",
+      bgColor: "bg-gradient-to-r from-orange-500 to-orange-600"
+    }
+  ];
+
+  // Auto-slide functionality
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [slides.length]);
+
+  const features = [
+    {
+      icon: "🆘",
+      title: "One-Touch SOS",
+      description: "Emergency help is just 3 seconds away with our intuitive SOS button."
+    },
+    {
+      icon: "👥",
+      title: "Emergency Contacts",
+      description: "Manage unlimited emergency contacts with priority-based notifications."
+    },
+    {
+      icon: "🏥",
+      title: "Health Integration",
+      description: "Connect health data and medical information for comprehensive emergency response."
+    },
+    {
+      icon: "📱",
+      title: "Mobile & Web App",
+      description: "Access from anywhere with our responsive web app and mobile PWA."
+    },
+    {
+      icon: "🤖",
+      title: "AI-Powered",
+      description: "Machine learning algorithms predict and prevent emergency situations."
+    },
+    {
+      icon: "🔒",
+      title: "Privacy Secure",
+      description: "End-to-end encryption ensures your personal and medical data stays private."
+    }
+  ];
+
+  const testimonials = [
+    {
+      name: "Sarah Johnson",
+      role: "Senior Citizen",
+      message: "Helpmate gives me confidence to live independently. My family knows I'm safe.",
+      avatar: "👵"
+    },
+    {
+      name: "Dr. Michael Chen",
+      role: "Emergency Physician",
+      message: "This system has revolutionized how we receive critical patient information during emergencies.",
+      avatar: "👨‍⚕️"
+    },
+    {
+      name: "Lisa Rodriguez",
+      role: "Working Mother",
+      message: "Peace of mind knowing my elderly parents have instant access to help when needed.",
+      avatar: "👩‍💼"
+    }
+  ];
+
   return (
-    <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 to-black text-white">
-      <h1 className="text-4xl font-bold mb-6">Welcome to Helpmate Emergency System</h1>
-      <p className="text-gray-300 mb-8 text-center max-w-md">
-        Your one-stop emergency assistance platform.  
-        Please login or sign up to continue.
-      </p>
+    <div className="min-h-screen bg-gray-50">
+      {/* Navigation Header */}
+      <nav className="bg-white shadow-lg sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            {/* Logo */}
+            <div className="flex items-center space-x-2">
+              <div className="bg-red-600 text-white p-2 rounded-full">
+                <span className="text-xl font-bold">🆘</span>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-800">Helpmate</h1>
+                <p className="text-xs text-gray-500">Emergency Response System</p>
+              </div>
+            </div>
 
-      <div className="flex gap-6">
-        <Link
-          to="/login"
-          className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-xl text-lg font-semibold"
-        >
-          Login
-        </Link>
-        <Link
-          to="/signup"
-          className="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-xl text-lg font-semibold"
-        >
-          Signup
-        </Link>
-      </div>
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-6">
+              <Link to="/" className="text-gray-700 hover:text-red-600 font-medium transition-colors">
+                Home
+              </Link>
+              <Link to="/dashboard" className="text-gray-700 hover:text-red-600 font-medium transition-colors">
+                Dashboard
+              </Link>
+              <Link to="/sos" className="text-gray-700 hover:text-red-600 font-medium transition-colors">
+                SOS Emergency
+              </Link>
+              <Link to="/profile" className="text-gray-700 hover:text-red-600 font-medium transition-colors">
+                Profile
+              </Link>
+              <Link to="/contacts" className="text-gray-700 hover:text-red-600 font-medium transition-colors">
+                Contacts
+              </Link>
+              <Link to="/alerts" className="text-gray-700 hover:text-red-600 font-medium transition-colors">
+                Alerts
+              </Link>
+            </div>
+
+            {/* Auth Buttons */}
+            <div className="hidden md:flex items-center space-x-4">
+              <Link 
+                to="/login" 
+                className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+              >
+                Login
+              </Link>
+              <Link 
+                to="/signup" 
+                className="bg-red-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition-colors"
+              >
+                Sign Up
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button 
+              className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <div className="w-6 h-6 flex flex-col justify-center items-center">
+                <span className={`bg-current block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm ${isMenuOpen ? 'rotate-45 translate-y-1' : '-translate-y-0.5'}`}></span>
+                <span className={`bg-current block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm my-0.5 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
+                <span className={`bg-current block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm ${isMenuOpen ? '-rotate-45 -translate-y-1' : 'translate-y-0.5'}`}></span>
+              </div>
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          {isMenuOpen && (
+            <div className="md:hidden bg-white border-t border-gray-200">
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                <Link to="/" className="block px-3 py-2 text-gray-700 hover:text-red-600 font-medium">
+                  Home
+                </Link>
+                <Link to="/dashboard" className="block px-3 py-2 text-gray-700 hover:text-red-600 font-medium">
+                  Dashboard
+                </Link>
+                <Link to="/sos" className="block px-3 py-2 text-gray-700 hover:text-red-600 font-medium">
+                  SOS Emergency
+                </Link>
+                <Link to="/profile" className="block px-3 py-2 text-gray-700 hover:text-red-600 font-medium">
+                  Profile
+                </Link>
+                <Link to="/contacts" className="block px-3 py-2 text-gray-700 hover:text-red-600 font-medium">
+                  Contacts
+                </Link>
+                <Link to="/alerts" className="block px-3 py-2 text-gray-700 hover:text-red-600 font-medium">
+                  Alerts
+                </Link>
+                <div className="border-t border-gray-200 pt-3 mt-3">
+                  <Link to="/login" className="block px-3 py-2 text-gray-700 hover:text-red-600 font-medium">
+                    Login
+                  </Link>
+                  <Link to="/signup" className="block px-3 py-2 text-white bg-red-600 rounded-lg mx-3 text-center hover:bg-red-700">
+                    Sign Up
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </nav>
+
+      {/* Hero Section with Slider */}
+      <section className="relative overflow-hidden">
+        <div className={`${slides[currentSlide].bgColor} transition-all duration-1000 ease-in-out`}>
+          <div className="max-w-7xl mx-auto px-4 py-20">
+            <div className="text-center text-white">
+              <div className="text-8xl mb-6 animate-pulse">
+                {slides[currentSlide].image}
+              </div>
+              <h2 className="text-4xl md:text-6xl font-bold mb-6">
+                {slides[currentSlide].title}
+              </h2>
+              <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
+                {slides[currentSlide].description}
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link 
+                  to="/signup" 
+                  className="bg-white text-gray-800 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors transform hover:scale-105"
+                >
+                  Get Started Free
+                </Link>
+                <Link 
+                  to="/sos" 
+                  className="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-gray-800 transition-colors transform hover:scale-105"
+                >
+                  Emergency SOS
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Slider Indicators */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full transition-colors ${
+                currentSlide === index ? 'bg-white' : 'bg-white/50'
+              }`}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* About Helpmate Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-800 mb-6">About Helpmate Emergency System</h2>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              Helpmate is a comprehensive emergency response system designed to provide instant help when you need it most. 
+              Using cutting-edge technology, AI-powered monitoring, and real-time communication, we ensure that help is always 
+              just seconds away. Whether you're a senior living independently, a parent concerned about family safety, or 
+              someone with medical conditions requiring immediate attention, Helpmate is your reliable guardian angel.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <div 
+                key={index} 
+                className="bg-gray-50 p-6 rounded-lg text-center hover:shadow-lg transition-shadow transform hover:-translate-y-1 duration-300"
+              >
+                <div className="text-4xl mb-4">{feature.icon}</div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-3">{feature.title}</h3>
+                <p className="text-gray-600">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-800 mb-6">How Helpmate Works</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Simple, fast, and reliable emergency response in just a few steps
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-red-600">1</span>
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Setup Profile</h3>
+              <p className="text-gray-600">Create your profile with medical information and emergency contacts</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-blue-600">2</span>
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Add Contacts</h3>
+              <p className="text-gray-600">Add family, friends, and medical professionals as emergency contacts</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-green-600">3</span>
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Press SOS</h3>
+              <p className="text-gray-600">In emergency, hold SOS button for 3 seconds to trigger alert</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-purple-600">4</span>
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Get Help</h3>
+              <p className="text-gray-600">Contacts receive instant alerts with your location and medical info</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-800 mb-6">What Our Users Say</h2>
+            <p className="text-xl text-gray-600">Real stories from people who trust Helpmate with their safety</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <div key={index} className="bg-gray-50 p-6 rounded-lg">
+                <div className="text-4xl mb-4 text-center">{testimonial.avatar}</div>
+                <p className="text-gray-600 mb-4 italic">"{testimonial.message}"</p>
+                <div className="text-center">
+                  <h4 className="font-semibold text-gray-800">{testimonial.name}</h4>
+                  <p className="text-sm text-gray-500">{testimonial.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Quick Actions Section */}
+      <section className="py-20 bg-red-50">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold text-gray-800 mb-8">Ready to Get Started?</h2>
+          <p className="text-xl text-gray-600 mb-8">Join thousands who trust Helpmate for their emergency safety</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Link 
+              to="/signup" 
+              className="bg-red-600 text-white p-6 rounded-lg hover:bg-red-700 transition-colors transform hover:scale-105"
+            >
+              <div className="text-3xl mb-2">🚀</div>
+              <h3 className="font-bold text-lg">Sign Up Free</h3>
+              <p className="text-sm opacity-90">Start your safety journey</p>
+            </Link>
+            
+            <Link 
+              to="/sos" 
+              className="bg-orange-600 text-white p-6 rounded-lg hover:bg-orange-700 transition-colors transform hover:scale-105"
+            >
+              <div className="text-3xl mb-2">🆘</div>
+              <h3 className="font-bold text-lg">Emergency SOS</h3>
+              <p className="text-sm opacity-90">Quick emergency access</p>
+            </Link>
+            
+            <Link 
+              to="/profile" 
+              className="bg-blue-600 text-white p-6 rounded-lg hover:bg-blue-700 transition-colors transform hover:scale-105"
+            >
+              <div className="text-3xl mb-2">👤</div>
+              <h3 className="font-bold text-lg">Setup Profile</h3>
+              <p className="text-sm opacity-90">Manage your information</p>
+            </Link>
+            
+            <Link 
+              to="/contacts" 
+              className="bg-green-600 text-white p-6 rounded-lg hover:bg-green-700 transition-colors transform hover:scale-105"
+            >
+              <div className="text-3xl mb-2">📞</div>
+              <h3 className="font-bold text-lg">Add Contacts</h3>
+              <p className="text-sm opacity-90">Setup emergency contacts</p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center space-x-2 mb-4">
+                <div className="bg-red-600 text-white p-2 rounded-full">
+                  <span className="text-lg font-bold">🆘</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold">Helpmate</h3>
+                  <p className="text-sm text-gray-400">Emergency Response System</p>
+                </div>
+              </div>
+              <p className="text-gray-400 text-sm">
+                Providing instant emergency response and peace of mind to families worldwide.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="font-bold mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-sm">
+                <li><Link to="/dashboard" className="text-gray-400 hover:text-white">Dashboard</Link></li>
+                <li><Link to="/sos" className="text-gray-400 hover:text-white">Emergency SOS</Link></li>
+                <li><Link to="/profile" className="text-gray-400 hover:text-white">Profile</Link></li>
+                <li><Link to="/contacts" className="text-gray-400 hover:text-white">Contacts</Link></li>
+                <li><Link to="/alerts" className="text-gray-400 hover:text-white">Alert History</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-bold mb-4">Features</h4>
+              <ul className="space-y-2 text-sm text-gray-400">
+                <li>One-Touch SOS</li>
+                <li>Health Monitoring</li>
+                <li>Location Sharing</li>
+                <li>AI-Powered Alerts</li>
+                <li>24/7 Monitoring</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-bold mb-4">Contact Info</h4>
+              <ul className="space-y-2 text-sm text-gray-400">
+                <li>📧 support@helpmate.com</li>
+                <li>📞 1-800-HELPMATE</li>
+                <li>🏠 24/7 Emergency Support</li>
+                <li>🌍 Global Coverage</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
+            <p>&copy; 2024 Helpmate Emergency System. All rights reserved. | Privacy Policy | Terms of Service</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
-}
+};
+
+export default HomePage;

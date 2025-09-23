@@ -1,26 +1,77 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./Pages/HomePage";
+import HomePage from "./pages/HomePage";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import Dashboard from "./Components/Dashboard";
 import Profile from "./Components/Profile";
-import SOSButton from "./Components/SOSButtton";
-import AlertPage from "./Pages/AlertPage";
-import ContactsPage from "./Pages/ContactsPage";
+import SOSButton from "./Components/SOSButton";
+import AlertPage from "./pages/AlertPage";
+import ContactsPage from "./pages/ContactsPage";
+import NotFoundPage from "./pages/NotFoundPage";
+
+// Optional: Protected Route component for authenticated pages
+const ProtectedRoute = ({ children }) => {
+  // Add authentication logic here later
+  // For now, return children directly
+  return children;
+};
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/sos" element={<SOSButton />} />
-        <Route path="/alerts" element={<AlertPage />} />
-        <Route path="/contacts" element={<ContactsPage />} />
-      </Routes>
+      <div className="App">
+        <Routes>
+         
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          
+         
+          <Route 
+            path="/dashboard" 
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/profile" 
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/sos" 
+            element={
+              <ProtectedRoute>
+                <SOSButton />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/contacts" 
+            element={
+              <ProtectedRoute>
+                <ContactsPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/alerts" 
+            element={
+              <ProtectedRoute>
+                <AlertPage />
+              </ProtectedRoute>
+            } 
+          />
+          
+         
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </div>
     </Router>
   );
 }
