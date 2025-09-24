@@ -1,6 +1,67 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { apiService } from '../services/api';
 
+// API Service
+const API_BASE_URL = 'http://localhost:5000/api';
+
+class ApiService {
+  async request(endpoint, options = {}) {
+    const url = `${API_BASE_URL}${endpoint}`;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      ...options,
+    };
+
+    // Add auth token if available
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    try {
+      const response = await fetch(url, config);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Something went wrong');
+      }
+
+      return data;
+    } catch (error) {
+      console.error('API Request failed:', error);
+      throw error;
+    }
+  }
+
+  async register(userData) {
+    return this.request('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(userData),
+    });
+  }
+
+  async login(credentials) {
+    return this.request('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+    });
+  }
+
+  async getProfile() {
+    return this.request('/auth/me');
+  }
+
+  async logout() {
+    return this.request('/auth/logout', {
+      method: 'POST',
+    });
+  }
+}
+
+const apiService = new ApiService();
+
+// Create Auth Context
 const AuthContext = createContext();
 
 // Auth reducer
@@ -175,4 +236,4 @@ export const useAuth = () => {
   return context;
 };
 
-export {AuthContext , };
+export { apiService };
