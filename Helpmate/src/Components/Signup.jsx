@@ -22,11 +22,6 @@ const Signup = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  // Clear errors when component unmounts
-  useEffect(() => {
-    return () => clearErrors();
-  }, [clearErrors]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({

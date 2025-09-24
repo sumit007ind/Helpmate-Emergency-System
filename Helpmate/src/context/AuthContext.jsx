@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
 
 // API Service
 const API_BASE_URL = 'http://localhost:5000/api';
@@ -21,14 +21,29 @@ class ApiService {
 
     try {
       const response = await fetch(url, config);
-      const data = await response.json();
-
+      
+      // Check if response is ok
       if (!response.ok) {
-        throw new Error(data.message || 'Something went wrong');
+        // Try to get error message from response
+        let errorMessage = 'Something went wrong';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (e) {
+          // If response is not JSON, use status text
+          errorMessage = response.statusText || errorMessage;
+        }
+        throw new Error(errorMessage);
       }
 
+      const data = await response.json();
       return data;
     } catch (error) {
+      // Handle network errors
+      if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
+        throw new Error('Cannot connect to server. Please make sure the backend is running on http://localhost:5000');
+      }
+      
       console.error('API Request failed:', error);
       throw error;
     }
@@ -102,12 +117,20 @@ const authReducer = (state, action) => {
         token: null,
         error: null,
       };
-    case 'LOAD_USER':
+    case 'LOAD_USER_SUCCESS':
       return {
         ...state,
         loading: false,
         isAuthenticated: true,
         user: action.payload,
+      };
+    case 'LOAD_USER_FAIL':
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: false,
+        user: null,
+        token: null,
       };
     case 'CLEAR_ERROR':
       return {
@@ -132,28 +155,31 @@ const initialState = {
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // Load user on app start
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      loadUser();
-    } else {
-      dispatch({ type: 'LOGOUT' });
+  // Use useCallback to prevent infinite loops
+  const loadUser = useCallback(async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      dispatch({ type: 'LOAD_USER_FAIL' });
+      return;
     }
-  }, []);
 
-  // Load user profile
-  const loadUser = async () => {
     try {
       const response = await apiService.getProfile();
       dispatch({
-        type: 'LOAD_USER',
+        type: 'LOAD_USER_SUCCESS',
         payload: response.user,
       });
     } catch (error) {
+      console.error('Failed to load user:', error);
       localStorage.removeItem('token');
-      dispatch({ type: 'LOGOUT' });
+      dispatch({ type: 'LOAD_USER_FAIL' });
     }
-  };
+  }, []); // Empty dependency array
+
+  // Load user on app start
+  useEffect(() => {
+    loadUser();
+  }, [loadUser]);
 
   // Register user
   const register = async (userData) => {
@@ -202,15 +228,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Logout user
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem('token');
     dispatch({ type: 'LOGOUT' });
-  };
+  }, []);
 
-  // Clear errors
-  const clearErrors = () => {
+  // Clear errors - use useCallback to prevent infinite loops
+  const clearErrors = useCallback(() => {
     dispatch({ type: 'CLEAR_ERROR' });
-  };
+  }, []);
 
   const value = {
     ...state,
@@ -236,4 +262,5 @@ export const useAuth = () => {
   return context;
 };
 
-export { apiService };
+
+

@@ -18,11 +18,6 @@ const Login = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  // Clear errors when component unmounts
-  useEffect(() => {
-    return () => clearErrors();
-  }, [clearErrors]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -133,4 +128,3 @@ const Login = () => {
 };
 
 export default Login;
-
