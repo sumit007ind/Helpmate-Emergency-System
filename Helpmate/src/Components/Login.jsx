@@ -11,6 +11,11 @@ const Login = () => {
   const { login, loading, error, isAuthenticated, clearErrors } = useAuth();
   const navigate = useNavigate();
 
+  // Clear errors when component mounts
+  useEffect(() => {
+    clearErrors();
+  }, [clearErrors]);
+
   // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
@@ -36,9 +41,9 @@ const Login = () => {
     
     try {
       await login(formData);
-      navigate('/dashboard');
+      // Navigate will happen automatically via the useEffect above
     } catch (err) {
-      // Error is handled by the context
+      // Error is already set in context
       console.error('Login failed:', err);
     }
   };
@@ -53,7 +58,7 @@ const Login = () => {
           Welcome Back
         </h2>
 
-        {/* Error Message */}
+        {/* Error Message - Only show when there's an error from login attempt */}
         {error && (
           <div className="mb-4 p-3 rounded-lg bg-red-500/20 backdrop-blur border border-red-500/30">
             <p className="text-red-200 text-sm text-center">{error}</p>

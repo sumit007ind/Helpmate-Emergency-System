@@ -15,6 +15,11 @@ const Signup = () => {
   const { register, loading, error, isAuthenticated, clearErrors } = useAuth();
   const navigate = useNavigate();
 
+  // Clear errors when component mounts
+  useEffect(() => {
+    clearErrors();
+  }, [clearErrors]);
+
   // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
@@ -90,9 +95,9 @@ const Signup = () => {
     try {
       const { confirmPassword, ...userData } = formData;
       await register(userData);
-      navigate('/dashboard');
+      // Navigate will happen automatically via the useEffect above
     } catch (err) {
-      // Error is handled by the context
+      // Error is already set in context
       console.error('Registration failed:', err);
     }
   };
@@ -109,7 +114,7 @@ const Signup = () => {
           Create Account
         </h2>
 
-        {/* Server Error Message */}
+        {/* Server Error Message - Only show when there's an error from registration attempt */}
         {error && (
           <div className="mb-4 p-3 rounded-lg bg-red-500/20 backdrop-blur border border-red-500/30">
             <p className="text-red-200 text-sm text-center">{error}</p>
