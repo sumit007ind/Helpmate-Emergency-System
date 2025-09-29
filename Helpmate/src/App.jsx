@@ -6,7 +6,10 @@ import Signup from "./Components/Signup";
 import Dashboard from "./Components/Dashboard";
 import Profile from "./Components/Profile";
 import SOSButton from "./Components/SOSButton";
-
+import AlertPage from "./Pages/AlertPage";
+import ContactsPage from "./Pages/ContactsPage";
+import NotFoundPage from "./Pages/NotFoundPage";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {
   return (
