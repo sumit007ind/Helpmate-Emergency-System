@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBell, FaUserFriends, FaSignOutAlt, FaExclamationTriangle } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
@@ -6,20 +6,15 @@ import { useAuth } from "../context/AuthContext";
 const Dashboard = () => {
   const { user, logout, isAuthenticated, loading } = useAuth();
   const navigate = useNavigate();
-  const [dashboardStats, setDashboardStats] = useState({
+  const [dashboardStats] = useState({
     activeAlerts: 0,
     emergencyContacts: 0,
     pendingIssues: 0
   });
 
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (!loading && !isAuthenticated) {
-      navigate('/login');
-    }
-  }, [isAuthenticated, loading, navigate]);
+  // REMOVED: Authentication redirect - now public
 
-  // Mock data for recent alerts (replace with real data later)
+  // Mock data for recent alerts
   const recentAlerts = [
     { id: 1, type: "SOS Alert", time: "2025-09-20 14:35", status: "Resolved" },
     { id: 2, type: "Emergency Contact Added", time: "2025-09-18 11:20", status: "Pending" },
@@ -46,11 +41,6 @@ const Dashboard = () => {
     );
   }
 
-  // Don't render if not authenticated
-  if (!isAuthenticated || !user) {
-    return null;
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-6">
       
@@ -58,26 +48,68 @@ const Dashboard = () => {
       <header className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold">🚨 Helpmate Dashboard</h1>
         <div className="flex items-center gap-4">
-          <div className="text-right hidden md:block">
-            <p className="text-sm text-gray-300">Welcome back,</p>
-            <p className="font-semibold">{user.name}</p>
-          </div>
-          <button 
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 rounded-xl transition transform hover:scale-105"
-          >
-            <FaSignOutAlt /> Logout
-          </button>
+          {isAuthenticated && user ? (
+            <>
+              <div className="text-right hidden md:block">
+                <p className="text-sm text-gray-300">Welcome back,</p>
+                <p className="font-semibold">{user.name}</p>
+              </div>
+              <button 
+                onClick={handleLogout}
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 rounded-xl transition transform hover:scale-105"
+              >
+                <FaSignOutAlt /> Logout
+              </button>
+            </>
+          ) : (
+            <div className="flex gap-3">
+              <Link 
+                to="/login"
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl transition"
+              >
+                Login
+              </Link>
+              <Link 
+                to="/signup"
+                className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-xl transition"
+              >
+                Sign Up
+              </Link>
+            </div>
+          )}
         </div>
       </header>
 
       {/* Welcome Section */}
       <section className="bg-white/10 backdrop-blur-md p-6 rounded-2xl shadow-lg mb-8">
-        <h2 className="text-2xl font-semibold mb-2">Welcome back, {user.name}! 👋</h2>
-        <p className="text-gray-300">Email: {user.email}</p>
-        <p className="text-gray-400 text-sm mt-1">
-          Last login: {user.lastLogin ? new Date(user.lastLogin).toLocaleDateString() : 'First time login'}
-        </p>
+        {isAuthenticated && user ? (
+          <>
+            <h2 className="text-2xl font-semibold mb-2">Welcome back, {user.name}! 👋</h2>
+            <p className="text-gray-300">Email: {user.email}</p>
+            <p className="text-gray-400 text-sm mt-1">
+              Last login: {user.lastLogin ? new Date(user.lastLogin).toLocaleDateString() : 'First time login'}
+            </p>
+          </>
+        ) : (
+          <>
+            <h2 className="text-2xl font-semibold mb-2">Welcome to Helpmate Dashboard! 👋</h2>
+            <p className="text-gray-300">Please login to access all features</p>
+            <div className="mt-4 flex gap-3">
+              <Link 
+                to="/login"
+                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl transition"
+              >
+                Login Now
+              </Link>
+              <Link 
+                to="/signup"
+                className="px-6 py-2 bg-green-600 hover:bg-green-700 rounded-xl transition"
+              >
+                Create Account
+              </Link>
+            </div>
+          </>
+        )}
       </section>
 
       {/* Statistics Cards */}
@@ -219,7 +251,7 @@ const Dashboard = () => {
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                <span>Health Monitoring: {user.medicalConditions ? 'Active' : 'Setup Needed'}</span>
+                <span>Health Monitoring: {user?.medicalConditions ? 'Active' : 'Setup Needed'}</span>
               </div>
             </div>
           </div>

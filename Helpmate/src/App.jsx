@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import HomePage from "./pages/HomePage";
+import HomePage from "./Pages/HomePage";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import Dashboard from "./Components/Dashboard";
@@ -22,47 +22,12 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             
-            {/* Protected Routes - Require Authentication */}
-            <Route 
-              path="/dashboard" 
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/profile" 
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/sos" 
-              element={
-                <ProtectedRoute>
-                  <SOSButton />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/contacts" 
-              element={
-                <ProtectedRoute>
-                  <ContactsPage />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/alerts" 
-              element={
-                <ProtectedRoute>
-                  <AlertPage />
-                </ProtectedRoute>
-              } 
-            />
+            {/* Now Public - No Authentication Required */}
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/sos" element={<SOSButton />} />
+            <Route path="/contacts" element={<ContactsPage />} />
+            <Route path="/alerts" element={<AlertPage />} />
             
             {/* 404 Not Found Route */}
             <Route path="*" element={<NotFoundPage />} />

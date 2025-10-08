@@ -6,48 +6,48 @@ const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
 
-  const slides = [
-    {
-      id: 1,
-      title: "Instant Emergency Response",
-      description:
-        "Press and hold the SOS button for 3 seconds to instantly alert your emergency contacts with your location.",
-      image: "🚨",
-      bgColor: "bg-gradient-to-r from-red-500 to-red-600",
-    },
-    {
-      id: 2,
-      title: "Health Monitoring",
-      description:
-        "AI-powered health monitoring that detects anomalies and automatically triggers emergency alerts when needed.",
-      image: "🏥",
-      bgColor: "bg-gradient-to-r from-blue-500 to-blue-600",
-    },
-    {
-      id: 3,
-      title: "Smart Contact Management",
-      description:
-        "Organize emergency contacts by priority levels. Family gets alerted first, followed by friends and medical professionals.",
-      image: "📞",
-      bgColor: "bg-gradient-to-r from-green-500 to-green-600",
-    },
-    {
-      id: 4,
-      title: "Real-time Location Sharing",
-      description:
-        "Automatically share your precise location with emergency contacts and services for faster response times.",
-      image: "📍",
-      bgColor: "bg-gradient-to-r from-purple-500 to-purple-600",
-    },
-    {
-      id: 5,
-      title: "Professional Monitoring",
-      description:
-        "24/7 professional monitoring service ensures someone is always watching out for your safety and wellbeing.",
-      image: "👨‍⚕️",
-      bgColor: "bg-gradient-to-r from-orange-500 to-orange-600",
-    },
-  ];
+ const slides = [
+  {
+    id: 1,
+    title: "Instant Emergency Response",
+    description: "Press and hold the SOS button for 3 seconds...",
+    image: "🚨",
+    bgImage: "https://images.unsplash.com/photo-1584515933487-779824d29309?w=1920&h=1080&fit=crop",
+    bgColor: "rgba(239, 68, 68, 0.8)", // red with transparency
+  },
+  {
+    id: 2,
+    title: "Health Monitoring",
+    description: "AI-powered health monitoring...",
+    image: "🏥",
+    bgImage: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&h=1080&fit=crop",
+    bgColor: "rgba(59, 130, 246, 0.8)", // blue with transparency
+  },
+  {
+    id: 3,
+    title: "Smart Contact Management",
+    description: "Organize emergency contacts...",
+    image: "📞",
+    bgImage: "https://images.unsplash.com/photo-1516387938699-a93567ec168e?w=1920&h=1080&fit=crop",
+    bgColor: "rgba(34, 197, 94, 0.8)", // green with transparency
+  },
+  {
+    id: 4,
+    title: "Real-time Location Sharing",
+    description: "Automatically share your precise location...",
+    image: "📍",
+    bgImage: "https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=1920&h=1080&fit=crop",
+    bgColor: "rgba(168, 85, 247, 0.8)", // purple with transparency
+  },
+  {
+    id: 5,
+    title: "Professional Monitoring",
+    description: "24/7 professional monitoring service...",
+    image: "👨‍⚕️",
+    bgImage: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1920&h=1080&fit=crop",
+    bgColor: "rgba(249, 115, 22, 0.8)", // orange with transparency
+  },
+];
 
   // Auto-slide functionality
   useEffect(() => {
@@ -281,52 +281,82 @@ const HomePage = () => {
       </nav>
 
       {/* Hero Section with Slider */}
-      <section className="relative overflow-hidden">
-        <div
-          className={`${slides[currentSlide].bgColor} transition-all duration-1000 ease-in-out`}
-        >
-          <div className="max-w-7xl mx-auto px-4 py-20">
-            <div className="text-center text-white">
-              <div className="text-8xl mb-6 animate-pulse">
-                {slides[currentSlide].image}
-              </div>
-              <h2 className="text-4xl md:text-6xl font-bold mb-6">
-                {slides[currentSlide].title}
-              </h2>
-              <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-                {slides[currentSlide].description}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Link
-                  to="/signup"
-                  className="bg-white text-gray-800 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors transform hover:scale-105"
-                >
-                  Get Started Free
-                </Link>
-                <Link
-                  to="/sos"
-                  className="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-gray-800 transition-colors transform hover:scale-105"
-                >
-                  Emergency SOS
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Hero Section with Image Slider */}
+<section className="relative overflow-hidden h-[600px]">
+  {/* Background Image with Overlay */}
+  <div
+    className="absolute inset-0 transition-all duration-1000 ease-in-out"
+    style={{
+      backgroundImage: `url(${slides[currentSlide].bgImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    }}
+  >
+    {/* Color Overlay */}
+    <div
+      className="absolute inset-0 transition-colors duration-1000"
+      style={{ backgroundColor: slides[currentSlide].bgColor }}
+    ></div>
+  </div>
 
-        {/* Slider Indicators */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 rounded-full transition-colors ${
-                currentSlide === index ? "bg-white" : "bg-white/50"
-              }`}
-            />
-          ))}
-        </div>
-      </section>
+  {/* Content */}
+  <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 h-full flex items-center">
+    <div className="text-center text-white w-full">
+      <div className="text-8xl mb-6 animate-pulse drop-shadow-2xl">
+        {slides[currentSlide].image}
+      </div>
+      <h2 className="text-4xl md:text-6xl font-bold mb-6 drop-shadow-lg">
+        {slides[currentSlide].title}
+      </h2>
+      <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
+        {slides[currentSlide].description}
+      </p>
+      <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <Link
+          to="/signup"
+          className="bg-white text-gray-800 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors transform hover:scale-105 shadow-xl"
+        >
+          Get Started Free
+        </Link>
+        <Link
+          to="/sos"
+          className="border-2 border-white bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-gray-800 transition-colors transform hover:scale-105 shadow-xl"
+        >
+          Emergency SOS
+        </Link>
+      </div>
+    </div>
+  </div>
+
+  {/* Slider Indicators */}
+  <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+    {slides.map((_, index) => (
+      <button
+        key={index}
+        onClick={() => setCurrentSlide(index)}
+        className={`w-3 h-3 rounded-full transition-all duration-300 ${
+          currentSlide === index 
+            ? "bg-white w-8" 
+            : "bg-white/50 hover:bg-white/75"
+        }`}
+      />
+    ))}
+  </div>
+
+  {/* Navigation Arrows */}
+  <button
+    onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
+    className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/30 hover:bg-white/50 backdrop-blur-sm text-white p-3 rounded-full transition-all"
+  >
+    ◀
+  </button>
+  <button
+    onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
+    className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/30 hover:bg-white/50 backdrop-blur-sm text-white p-3 rounded-full transition-all"
+  >
+    ▶
+  </button>
+</section>
 
       {/* About Helpmate Section */}
       <section className="py-20 bg-white">
