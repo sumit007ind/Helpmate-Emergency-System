@@ -267,7 +267,12 @@ const HomePage = () => {
                   >
                     Login
                   </Link>
-                
+                  <Link
+                    to="/signup"
+                    className="block px-3 py-2 text-white bg-red-600 rounded-lg mx-3 text-center hover:bg-red-700"
+                  >
+                    Sign Up
+                  </Link>
                 </div>
               </div>
             </div>
