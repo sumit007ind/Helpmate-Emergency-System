@@ -265,17 +265,7 @@ const HomePage = () => {
                     to="/login"
                     className="block px-3 py-2 text-gray-700 hover:text-red-600 font-medium"
                   >
-                    Login
-                  </Link>
-                  <Link
-                    to="/signup"
-                    className="block px-3 py-2 text-white bg-red-600 rounded-lg mx-3 text-center hover:bg-red-700"
-                  >
-                    Sign Up
-                  </Link>
-                </div>
-              </div>
-            </div>
+               
           )}
         </div>
       </nav>
