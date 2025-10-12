@@ -122,7 +122,12 @@ const Login = () => {
           </Link>
         </p>
 
-        <
+        <p className="mt-4 text-center">
+          <Link to="/" className="text-gray-400 hover:text-white text-sm transition duration-200">
+            ← Back to Home
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };
