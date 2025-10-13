@@ -120,7 +120,8 @@ const Login = () => {
           <Link to="/signup" className="text-pink-500 hover:underline">
             Sign up
           </Link>
-        <
+        </p>
+
       </div>
     </div>
   );
