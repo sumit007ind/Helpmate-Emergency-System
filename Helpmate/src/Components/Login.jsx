@@ -120,13 +120,7 @@ const Login = () => {
           <Link to="/signup" className="text-pink-500 hover:underline">
             Sign up
           </Link>
-        </p>
-
-        <p className="mt-4 text-center">
-          <Link to="/" className="text-gray-400 hover:text-white text-sm transition duration-200">
-            ← Back to Home
-          </Link>
-        </p>
+        <
       </div>
     </div>
   );
