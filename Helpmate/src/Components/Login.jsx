@@ -116,4 +116,15 @@ const Login = () => {
         </form>
 
         <p className="mt-6 text-center text-gray-300 text-sm">
-       
+          Don't have an account?{" "}
+          <Link to="/signup" className="text-pink-500 hover:underline">
+            Sign up
+          </Link>
+        </p>
+
+      </div>
+    </div>
+  );
+};
+
+export default Login;
