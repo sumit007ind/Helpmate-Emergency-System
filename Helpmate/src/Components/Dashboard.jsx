@@ -240,20 +240,7 @@ const Dashboard = () => {
           </div>
           <div>
             <h4 className="font-semibold mb-2">System Status:</h4>
-            <div className="space-y-1 text-gray-300">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                <span>Emergency System: Active</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                <span>Location Services: Enabled</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                <span>Health Monitoring: {user?.medicalConditions ? 'Active' : 'Setup Needed'}</span>
-              </div>
-            </div>
+           
           </div>
         </div>
       </section>
